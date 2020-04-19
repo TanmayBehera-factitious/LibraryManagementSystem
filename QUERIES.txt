@@ -1,0 +1,11 @@
+show databases;
+create database test;
+use test;
+create table 'test'.'accountinformation'('Username' varchar(20), 'Password' varchar(20), 'Admin/User' varchar(20));
+create table 'test'.'book_Details'('Username' varchar(20), 'Book_name' varchar(20), 'Status' varchar(20), 'Date_of_Issue' date, 'Date_of_return' varchar(20));
+show tables;
+desc accountinformation;
+desc book_details;
+insert into accountinformation values('admin', 'admin', 'Admin');
+select * from accountinformation;
+select * from book_details;
