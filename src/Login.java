@@ -4,11 +4,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
+
 public class Login {
 	private static Scanner sc = new Scanner(System.in);
 	@SuppressWarnings("unused")
 	private static Admin ad;
-	public static void main(String[] args) {
+	
+	public static void login() {
 		try{
 			
 			String username, password;

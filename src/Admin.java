@@ -3,7 +3,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Scanner;
+
 
 public class Admin extends Account{
 	private Scanner sc = new Scanner(System.in);
@@ -21,7 +23,6 @@ public class Admin extends Account{
 			stmt = con.createStatement();
 		
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 		
@@ -38,6 +39,19 @@ public class Admin extends Account{
 			}
 		}while(choice != 5);
 	}
+	
+	public void mainAdminPage() {
+		System.out.println("MAIN MENU");
+		System.out.println("1. Add Users");
+		System.out.println("2. Shows Issued Books");
+		System.out.println("3. Issue Book");
+		System.out.println("4. Remove Users");
+		System.out.println("5. Quit ");
+		
+		System.out.print("Enter your choice: ");
+		choice = sc.nextInt();
+	}
+
 
 	private void removeUser() throws SQLException {
 		String username = sc.nextLine();
@@ -47,19 +61,19 @@ public class Admin extends Account{
 	}
 	
 	private void issueBook() throws SQLException {
-		String dateOfIssue, username, dateOfReturn, bookName;
+		String dateOfIssue, username, dateToReturn, bookName; 
 		sc = new Scanner(System.in);
 		
 		System.out.print("Enter username: ");
 		username = sc.nextLine();
 		System.out.print("Enter Book Name: ");
 		bookName = sc.nextLine();
-		System.out.print("Enter date of issue(YYYY-MM-DD): ");
-		dateOfIssue = sc.nextLine();
-		System.out.print("Enter date of return(YYY-MM-DD): ");
-		dateOfReturn = sc.nextLine();
 		
-		Query = String.format("INSERT INTO BOOK_DETAILS VALUES('%s', '%s', '%s', '%s', '%s')", username, bookName, "Issued", dateOfIssue, dateOfReturn);
+		LocalDate ld = LocalDate.now();
+		dateOfIssue = ld.toString();
+		dateToReturn = ld.plusWeeks(2).toString();
+		
+		Query = String.format("INSERT INTO BOOK_DETAILS VALUES('%s', '%s', '%s', '%s', '%s')", username, bookName, "Issued", dateOfIssue, dateToReturn);
 		stmt.executeUpdate(Query);
 	}
 	
@@ -76,18 +90,6 @@ public class Admin extends Account{
 		Query = String.format("INSERT INTO AccountInformation VALUES('%s', '%s', '%s')", username, password, userType);
 		stmt.executeUpdate(Query);
 		
-	}
-	
-	public void mainAdminPage() {
-		System.out.println("MAIN MENU");
-		System.out.println("1. Add Users");
-		System.out.println("2. Shows Issued Books");
-		System.out.println("3. Issue Book");
-		System.out.println("4. Remove Users");
-		System.out.println("5. Quit ");
-		
-		System.out.print("Enter your choice: ");
-		choice = sc.nextInt();
 	}
 
 	@Override
