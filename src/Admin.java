@@ -65,33 +65,47 @@ public class Admin extends Account{
 	private void issueBook() throws SQLException {
 		String dateOfIssue, username, dateToReturn, bookName; 
 		sc = new Scanner(System.in);
+		boolean auth = false;
 		
 		System.out.print("Enter username: ");
 		username = sc.nextLine();
-		System.out.print("Enter Book Name: ");
-		bookName = sc.nextLine();
+		auth = userVerify(username);
 		
-		LocalDate ld = LocalDate.now();
-		dateOfIssue = ld.toString();
-		dateToReturn = ld.plusWeeks(2).toString();
+		if(!auth) {
+			System.out.print("Enter Book Name: ");
+			bookName = sc.nextLine();
 		
-		Query = String.format("INSERT INTO BOOK_DETAILS VALUES('%s', '%s', '%s', '%s', '%s')", username, bookName, "Issued", dateOfIssue, dateToReturn);
-		stmt.executeUpdate(Query);
+			LocalDate ld = LocalDate.now();
+			dateOfIssue = ld.toString();
+			dateToReturn = ld.plusWeeks(2).toString();
+		
+			Query = String.format("INSERT INTO BOOK_DETAILS VALUES('%s', '%s', '%s', '%s', '%s')", username, bookName, "Issued", dateOfIssue, dateToReturn);
+			stmt.executeUpdate(Query);
+		}
+		else 
+			System.out.println("No user with provided username found.");
 	}
 	
 	private void addUsers() throws SQLException {
 		String username, password, userType;
 		sc = new Scanner(System.in);
+		boolean auth = true;
+		
 		System.out.print("Enter username: ");
 		username = sc.nextLine();
-		System.out.print("Enter password: ");
-		password = sc.nextLine();
-		System.out.print("Enter user type(Admin/User): ");
-		userType = sc.nextLine();
+		auth = userVerify(username);
 		
-		Query = String.format("INSERT INTO AccountInformation VALUES('%s', '%s', '%s')", username, password, userType);
-		stmt.executeUpdate(Query);
+		if(auth) {
+			System.out.print("Enter password: ");
+			password = sc.nextLine();
+			System.out.print("Enter user type(Admin/User): ");
+			userType = sc.nextLine();
 		
+			Query = String.format("INSERT INTO AccountInformation VALUES('%s', '%s', '%s')", username, password, userType);
+			stmt.executeUpdate(Query);
+		}
+		else 
+			System.out.println("Username already exists.");
 	}
 
 	@Override
