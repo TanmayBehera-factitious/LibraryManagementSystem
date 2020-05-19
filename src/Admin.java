@@ -54,9 +54,11 @@ public class Admin extends Account{
 
 
 	private void removeUser() throws SQLException {
+		System.out.println("Enter username: ");
+		sc = new Scanner(System.in);
 		String username = sc.nextLine();
 		
-		Query = String.format("DELETE FROM BOOK_DETAILS WHERE USERNAME = '%d'", username);
+		Query = String.format("DELETE FROM AccountInformation WHERE USERNAME = '%s'", username);
 		stmt.executeUpdate(Query);
 	}
 	
@@ -84,7 +86,7 @@ public class Admin extends Account{
 		username = sc.nextLine();
 		System.out.print("Enter password: ");
 		password = sc.nextLine();
-		System.out.print("Enter user type: ");
+		System.out.print("Enter user type(Admin/User): ");
 		userType = sc.nextLine();
 		
 		Query = String.format("INSERT INTO AccountInformation VALUES('%s', '%s', '%s')", username, password, userType);
